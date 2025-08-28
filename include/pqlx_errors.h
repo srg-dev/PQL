@@ -1,0 +1,52 @@
+#ifndef	__PQLX_ERRORS_H
+#define __PQLX_ERRORS_H
+
+// error numbers
+#define FAILURE		-1
+#define NO_CHANS		-2
+#define FILEDNE		-3
+#define DBMAINT_RUNNING -4
+
+enum {
+	PQLXSUCCESS=0,
+	PQLXSRVRPAUSE,
+	PQLXSRVRRESUME,
+
+	// SYSTEM Errors - 100 - 200
+	NO_MEMORY=100,
+	UNKNOWN_EVENT,
+	SRVR_CRASH,
+	NO_SUCH_RECORD,
+	SRVR_NOT_READY,
+	SQL_FAILURE,
+	NO_STATIONS,
+
+	// PSD/PDF ANALYSIS related Error Codes - 1000 - 1100
+	NO_RESP_FILE=1001,
+	NOT_ENOUGH_DATA,
+	FILES_DISCONTINUOUS,
+	FFT_ERROR,
+	PERIOD_MISMATCH,
+	FILE_READ_ERROR,
+	FILE_DNE,
+	EVALRESP_FAILURE,
+	SRATE_ERROR,
+	FILE_TOO_LARGE,
+
+	// IMPORT PDF error codes - 1101 - 1110
+	IDX_OPEN_FAIL=1101,
+	PSD_OPEN_FAIL,
+};
+
+enum {		// parsed error messages and their types, see logs.c for usage
+	MYSQL_TBL_CRASH,
+	MYSQL_TBL_REPAIR,
+	EVALRESP_EXEC_CONT,
+	TTLHANDLEDERRTYPES
+};
+
+#define MYSQL_TBL_CRASH_MSG		"is marked as crashed"
+#define MYSQL_TBL_REPAIR_MSG	"try to repair it"
+#define EVALRESP_EXEC_CONT_MSG	"Execution continuing"
+
+#endif

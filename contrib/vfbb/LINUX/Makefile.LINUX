@@ -1,0 +1,60 @@
+#
+# make.libvfbb - Create library functions for reading headers and time-series
+#                data from blocked-binary format files for Linux (i386).
+#
+# Shell command syntax: make -f make.libvfbb [ all | libvfbb | clean ]
+#
+#
+# Author:      Lawrence M. Baker
+#              U.S. Geological Survey
+#              345 Middlefield Road  MS977
+#              Menlo Park, CA  94025
+#              baker@usgs.gov
+#
+#                                 Disclaimer
+#
+# Although  this  program  has  been  used  by  the  U.S.  Geological Survey, no
+# warranty, expressed or implied, is made by the USGS as  to  the  accuracy  and
+# functioning  of  the  program and related program material, nor shall the fact
+# of distribution  constitute  any  such  warranty,  and  no  responsibility  is
+# assumed by the USGS in connection therewith.
+#
+#
+# Modification History:
+#
+# 30-Nov-2004  L. M. Baker      Original version.
+#
+
+ARCH=LINUX
+VPATH = ../src
+LIB=../../../lib/$(ARCH)
+
+OBJS = bbdata.o bbdata_.o bbihdr.o bbihdr_.o bbrhdr.o bbrhdr_.o bbthdr.o \
+       bbthdr_.o from_vax_ihdr.o from_vax_ihdr_.o from_vax_rhdr.o \
+       from_vax_rhdr_.o from_pc_rhdr.o from_pc_rhdr_.o to_vax_ihdr.o \
+       to_vax_ihdr_.o to_vax_rhdr.o to_vax_rhdr_.o from_vax_i2.o \
+       from_vax_i2_.o from_vax_i4.o from_vax_i4_.o from_vax_r4.o \
+       from_vax_r4_.o from_vax_d8.o from_vax_d8_.o from_vax_g8.o \
+       from_vax_g8_.o from_vax_h16.o from_vax_h16_.o to_vax_i2.o to_vax_i2_.o \
+       to_vax_i4.o to_vax_i4_.o to_vax_r4.o to_vax_r4_.o to_vax_d8.o \
+       to_vax_d8_.o to_vax_g8.o to_vax_g8_.o to_vax_h16.o to_vax_h16_.o \
+       is_little_endian.o is_little_endian_.o
+
+# -O3 (highest level of optimiz)ation -ansi (strict ANSI)
+CC=gcc
+CFLAGS = -O3 -ansi -O
+
+all:		libvfbb.a
+
+libvfbb:
+	$(MAKE) -f make.libvfbb libvfbb.a
+	$(RM) $(OBJS)
+
+libvfbb.a:	$(OBJS)
+	$(MAKE) -f make.libvfbb libvfbb.a
+	ar -r -c libvfbb.a $(OBJS)
+	mv libvfbb.a $(LIB)
+	ranlib $(LIB)/libvfbb.a
+
+clean:
+	$(RM) -f libvfbb.a $(LIB)/libvfbb.a $(OBJS) *~

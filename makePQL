@@ -1,0 +1,199 @@
+#!/bin/bash
+
+ARCH=`uname`
+
+case "${ARCH}" in
+	"Darwin"	)	export ARCH=MAC
+					export DEBUG="-g -Wall"
+#					export DEBUG="-O"
+					export PQLCFLAGS="-unroll2"
+					export PQLLFLAGS="-lm -all_load";;
+	"Linux" | "FreeBSD"		)	export ARCH=LINUX
+          export DEBUG="-g -Wall"
+          export PQLCFLAGS="$(pkg-config --cflags gtk+-2.0 glib-2.0) -I/usr/include/tirpc"
+          export PQLLFLAGS="-lm $(pkg-config --libs gtk+-2.0 glib-2.0) -ltirpc -lnsl";;
+#					export DEBUG="-O3"
+#					HARDWARE=`uname -i`
+#					case "${HARDWARE}" in
+#						"i386"	)
+#							export PQLCFLAGS="-march=pentiumpro";;
+#						"x86_64" | "ia64"	)
+#							export PQLCFLAGS="-march=x86_64";;
+#					esac
+	"SunOS"	)	export ARCH=SOLARIS
+#					export DEBUG="-g -Wall"
+					export DEBUG="-O2"
+					export PQLCFLAGS="-unroll2 -mcpu=v9"
+					export PQLLFLAGS="-lm -lnsl"
+					export LD_RUN_PATH=/opt/passcal/other/lib;;
+esac
+
+
+PQLHOME=`pwd`
+export PQLLIB=${PQLHOME}/lib/${ARCH}
+export PQLINC=${PQLHOME}/include
+export PQLBIN=${PQLHOME}/bin/${ARCH}
+#export PKG_CONFIG_PATH="/opt/passcal/other/lib/pkgconfig:${PKG_CONFIG_PATH}"
+
+if [ "$1" = "clean" ] ; then
+/bin/rm $PQLLIB/*.a
+find . -name *~ -exec /bin/rm {} ";"	>/dev/null
+fi
+
+cd contrib/vfbb/${ARCH}
+if [ "$1" = "clean" ] ; then
+make $1
+fi
+if [ "$2" != "only" ] ; then
+make
+cp libvfbb.a $PQLLIB
+ranlib $PQLLIB/libvfbb.a
+fi
+cd $PQLHOME
+
+cd contrib/libmseed
+if [ "$1" = "clean" ] ; then
+make $1
+fi
+if [ "$2" != "only" ] ; then
+make
+cp libmseed.a $PQLLIB
+ranlib $PQLLIB/libmseed.a
+fi
+cd $PQLHOME
+
+cd contrib/gdbm
+if [ "$1" = "clean" ] ; then
+	make $1
+fi
+if [ "$2" != "only" ] ; then
+	if [ ! -e ${PQLLIB}/libgdbm.a ] ; then
+		CFLAGS="$(pkg-config --cflags gtk+-2.0 glib-2.0)" \
+    LDFLAGS="$(pkg-config --libs gtk+-2.0 glib-2.0)" \
+		./configure
+	fi
+	make
+	cp .libs/libgdbm.a $PQLLIB
+	ranlib $PQLLIB/libgdbm.a
+fi
+cd $PQLHOME
+
+cd contrib/tdb
+if [ "$1" = "clean" ] ; then
+	make $1
+fi
+if [ "$2" != "only" ] ; then
+	if [ ! -e ${PQLLIB}/libtdb.a ] ; then
+		make distclean
+		./configure
+	fi
+	make
+	ar cr ${PQLLIB}/libtdb.a bin/default/common/*.o
+	ranlib ${PQLLIB}/libtdb.a
+fi
+cd $PQLHOME
+
+cd utils/data
+if [ "$1" = "clean" ] ; then
+make clean
+fi
+if [ "$2" != "only" ] ; then
+make
+fi
+cd $PQLHOME
+
+cd utils/hlpr
+if [ "$1" = "clean" ] ; then
+make clean
+fi
+if [ "$2" != "only" ] ; then
+make
+fi
+cd $PQLHOME
+
+cd utils/tform
+if [ "$1" = "clean" ] ; then
+make clean
+fi
+if [ "$2" != "only" ] ; then
+make
+fi
+cd $PQLHOME
+
+cd utils/gdbm/src
+if [ "$1" = "clean" ] ; then
+make clean
+fi
+if [ "$2" != "only" ] ; then
+make
+fi
+cd $PQLHOME
+
+cd utils/dbl/src
+if [ "$1" = "clean" ] ; then
+make clean
+fi
+if [ "$2" != "only" ] ; then
+make
+fi
+cd $PQLHOME
+
+cd src
+if [ "$1" = "clean" ] ; then
+make clean
+fi
+if [ "$2" != "only" ] ; then
+make
+cd $PQLHOME
+
+#echo
+#cd utils/convLDB 
+#if [ "$1" = "clean" ] ; then
+#make clean
+#fi
+#if [ "$2" != "only" ] ; then
+#make
+#fi
+
+
+#!/bin/bash
+
+# verify the compilation and installation
+exes="pql"
+
+echo
+echo "Verifying PQL compilation:"
+echo
+
+cd $PQLBIN
+failed=FALSE
+for exe in $exes ; do
+
+	if [ ! -e $exe ] ; then
+		echo "Missing executable file '$exe'."
+		echo
+		failed=TRUE
+	fi
+
+done
+
+cd $PQLLIB
+if [ "${failed}" = "FALSE" ] ; then
+	echo "PQL exe's Compiled and Installed Successfully..."
+	echo
+else
+	libs="libdata.a libmseed.a libutils.a libvfbb.a libgdbm.a libdbl.a"
+	for lib in $libs ; do
+		if [ ! -e $lib ] ; then
+			echo "Required PQL Library '$lib' does not exist."
+			echo "	Compilation most likely failed, please investigate..."
+		fi
+	done
+	
+	echo
+	echo "PQL Verification FAILED!"
+fi
+fi
+
+cd $PQLHOME
+

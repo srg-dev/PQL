@@ -1,0 +1,20 @@
+
+# Object files
+*.o
+
+# Static libraries
+*.a
+
+# Compiled binaries
+*.out
+*.exe
+*.bin
+*.elf
+
+# Catch-all: any file with no extension (likely binaries)
+*[!./]*    # optional, use carefully
+
+# Build output
+/build/
+/bin/
+/dist/

@@ -1,0 +1,156 @@
+#ifndef _PQLX_DEFS_HEAD
+#define _PQLX_DEFS_HEAD
+
+#include "pqlx_errors.h"
+
+#define PQLX_ADMIN_DBVER_MIN 19
+#define PQLX_ADMIN_DBVER_MAX 19
+
+#define	MAX_PATH_STR	(2048)
+#define	MAX_FILE_STR	(100)
+#define MAX_DIR_STR		(MAX_PATH_STR-MAX_FILE_STR)
+#define NONE		-1
+
+enum {
+	SRVRNOCONNECTION,
+	SRVRCONNECTING,
+	SRVRCONNECTED
+};
+
+enum {
+	SRVRDEFAULT,
+	DBDEFAULT
+};
+
+enum {
+	SRVRDETAILS,
+	SRVRHOSTNAME,
+	SRVRDBNAME,
+	SRVRDESC,
+	SRVRORG,
+	SRVRTYPE,
+	SRVRACCESS,
+	SRVRDADMIN,
+	SRVRDADMINEM,
+	SRVRTADMIN,
+	SRVRTADMINEM,
+	SRVRTTLDETAILS
+};
+
+enum {
+	PDFSERVER,
+	PDFDATABASE,
+	TOTALPDFSRVRI
+};
+
+enum {
+	PDFSRVRMORE,
+	PDFSRVRLESS,
+	PDFSRVRREFRESH,
+	PDFSRVRCONNECT,
+	PDFSRVRCANCEL,
+	PDFSRVRDELETE,
+	PDFSRVRFETCH,
+	PDFSRVRDISPLAY,
+	PDFSRVRSELECT
+};
+
+enum {				// PDF Plot Date Formats
+	PDF_DF_1,		// YYYY.DDD
+	PDF_DF_2,		// YYYY-MM-DD
+	PDF_DF_3,		// DD-MM-YYYY
+	PDF_DF_4,		// DD-mmm-YYYY
+	TTLPDFDATEFORMATS
+};
+
+enum {
+	XMIN,
+	XMAX,
+	TTLXCOORDS
+};
+
+enum {
+	HG_OFF = 0,
+	HG_ON = 1
+};
+
+enum {
+	OFF,
+	ON,
+	TTLDISPDIRS
+};
+
+enum {
+	MAX,
+	MIN,
+	MEAN,
+	MAXSTATS
+};
+
+enum {
+	STARTTIME,
+	ENDTIME,
+	TTLTIMES
+};
+
+enum {
+	STARTDT,
+	ENDDT,
+	TTLDATES
+};
+
+enum {
+	LAT,
+	LON,
+	TTLCOORDS
+};
+
+enum {
+	ELEV,
+	DEPTH,
+	AZIMUTH,
+	DIP,
+	TTLLOCATIONS
+};
+
+enum {
+	CONNECTSIGS,
+	BLOCKSIGS,
+	UNBLOCKSIGS,
+	SETCOMBOS,
+	SRVRDETSET,
+	SRVRDETCLEAR,
+	SRVRDETUNEDIT,
+	SRVRDETEDIT,
+	SRVRDETGET
+};
+
+enum {
+	INACTIVE,
+	ACTIVE
+};
+
+#include "dbl_iface.h"
+
+#ifndef	PQL_ONLY
+#include "db_iface.h"
+#include "pqlx_types.h"
+
+// DB Library calls
+int db_request(SQLDI *sqldi);
+int dbl_request(DBLDI *dbldi);
+
+#define PQLXCLNT		"pqlxClnt"
+#define PQLXCLNTPW	"PqLXClnT"
+#define PQLXSRVR		"pqlxSrvr"
+#define PQLXDBMAINT	"pqlxDBMaint"
+#define PQLXSRVRPW	"PqLXSrvR"
+#define PQLXADMIN	"pqlxAdmin"
+#define PQLXADMINPW	"PqLXAdmiN"
+#define PQLXMETADB	"PQLXMETA"
+#define	THUMBSIZEMAXWPDF	240
+#define	THUMBSIZEMAXWSPEC	276
+
+#endif
+
+#endif

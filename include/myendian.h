@@ -1,0 +1,2 @@
+#define MY_BIG_ENDIAN		1
+#define MY_LITTLE_ENDIAN	0

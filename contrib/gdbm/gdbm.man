@@ -1,0 +1,330 @@
+GDBM  - The GNU database manager.  Includes [1mdbm [22mand [1mndbm [22mcompata-
+bility. (Version 1.8.3.)
+
+
+GNU dbm is a library of routines that  manages  data  files  that
+contain  key/data pairs.  The access provided is that of storing,
+retrieval, and deletion by key and a non-sorted traversal of  all
+keys.   A  process  is  allowed to use multiple data files at the
+same time.
+
+A process that opens a gdbm file is designated as a "reader" or a
+"writer".   Only one writer may open a gdbm file and many readers
+may open the file.  Readers and writers can  not  open  the  gdbm
+file at the same time. The procedure for opening a gdbm file is:
+
+  GDBM_FILE dbf;
+
+  dbf  =  gdbm_open  (  name,  block_size,  read_write, mode, fa-
+tal_func )
+
+[4mName[24m is the name of the file (the complete name,  gdbm  does  not
+append any characters to this name).  [4mBlock_size[24m is the size of a
+single transfer from disk to memory. This  parameter  is  ignored
+unless  the  file is a new file.  The minimum size is 512.  If it
+is less than 512, dbm will use the stat block size for  the  file
+system.  [4mRead_write[24m can have one of the following values:
+reader
+writer
+writer - if database does not exist create new one
+writer - create new database regardless if one exists
+For the last three (writers of the database) the following may be
+added added  to  [4mread_write[24m  by  bitwise  or:  which  causes  all
+database  operations  to  be  synchronized to the disk, and which
+prevents the library from performing any locking on the  database
+file.  The option is now obsolete, since gdbm defaults to no-sync
+mode.
+[4mMode[24m is the file mode (see [1mchmod(2) [22mand [1mopen(2)[22m) if the  file  is
+created. [4m(*Fatal_func)[24m [4m()[24m is a function for dbm to call if it de-
+tects a fatal error. The only parameter of  this  function  is  a
+string.   If  the value of 0 is provided, gdbm will use a default
+function.
+
+The return value [4mdbf[24m is the pointer needed by all other  routines
+to  access  that  gdbm  file.  If the return is the NULL pointer,
+[1mgdbm_open [22mwas  not  successful.   The  errors  can  be  found  in
+[4mgdbm_errno[24m  for gdbm errors and in [4merrno[24m for system errors.  (For
+error codes, see gdbmerrno.h.)
+
+In all of the following calls, the parameter [4mdbf[24m  refers  to  the
+pointer returned from [1mgdbm_open[22m.
+
+It  is  important that every file opened is also closed.  This is
+needed to update the reader/writer count on the  file.   This  is
+done by:
+
+  gdbm_close (dbf);
+
+
+The database is used by 3 primary routines.  The first stores da-
+ta in the database.
+
+  ret = gdbm_store ( dbf, key, content, flag )
+
+[4mDbf[24m is the pointer returned by [1mgdbm_open[22m.  [4mKey[24m is the  key  data.
+[4mContent[24m is the data to be associated with the [4mkey[24m.  [4mFlag[24m can have
+one of the following values:
+insert only, generate an error if key exists
+replace contents if key exists.
+
+If a reader calls [1mgdbm_store[22m, the return value will be   -1.   If
+called  with  GDBM_INSERT  and [4mkey[24m is in the database, the return
+value will be 1.  Otherwise, the return value is 0.
+
+[4mNOTICE:[24m [4mIf[24m [4myou[24m [4mstore[24m [4mdata[24m [4mfor[24m [4ma[24m [4mkey[24m [4mthat[24m [4mis[24m [4malready[24m [4min[24m  [4mthe[24m  [4mdata[0m
+[4mbase,[24m [4mgdbm[24m [4mreplaces[24m [4mthe[24m [4mold[24m [4mdata[24m [4mwith[24m [4mthe[24m [4mnew[24m [4mdata[24m [4mif[24m [4mcalled[24m [4mwith[0m
+[4mGDBM_REPLACE.[24m  [4mYou[24m [4mdo[24m [4mnot[24m [4mget[24m [4mtwo[24m [4mdata[24m [4mitems[24m [4mfor[24m [4mthe[24m [4msame[24m [4mkey[24m [4mand[0m
+[4myou[24m [4mdo[24m [4mnot[24m [4mget[24m [4man[24m [4merror[24m [4mfrom[24m [4mgdbm_store.[0m
+
+[4mNOTICE:[24m  [4mThe[24m  [4msize[24m  [4min[24m  [4mgdbm[24m  [4mis[24m [4mnot[24m [4mrestricted[24m [4mlike[24m [4mdbm[24m [4mor[24m [4mndbm.[0m
+[4mYour[24m [4mdata[24m [4mcan[24m [4mbe[24m [4mas[24m [4mlarge[24m [4mas[24m [4myou[24m [4mwant.[0m
+
+
+To search for some data:
+
+  content = gdbm_fetch ( dbf, key )
+
+[4mDbf[24m is the pointer returned by [1mgdbm_open[22m.  [4mKey[24m is the key data.
+
+
+If the [4mdptr[24m element of the return value  is  NULL,  no  data  was
+found.   Otherwise the return value is a pointer to the found da-
+ta.  The storage space for the [4mdptr[24m element  is  allocated  using
+[1mmalloc(3C)[22m.   [1mGdbm  [4m[22mdoes[24m [4mnot[24m [4mautomatically[24m [4mfree[24m [4mthis[24m [4mdata.[24m  [4mIt[24m [4mis[0m
+[4mthe[24m [4mprogrammer’s[24m [4mresponsibility[24m [4mto[24m [4mfree[24m [4mthis[24m [4mstorage[24m [4mwhen[24m  [4mit[24m  [4mis[0m
+[4mno[24m [4mlonger[24m [4mneeded.[0m
+
+
+To search for some data, without retrieving it:
+
+  ret = gdbm_exists ( dbf, key )
+
+[4mDbf[24m is the pointer returned by [1mgdbm_open[22m.  [4mKey[24m is the key data to
+search for.
+
+If the [4mkey[24m is found within the database,  the  return  value  [4mret[0m
+will be true.  If nothing appropiate is found, [4mret[24m will be false.
+This routine is useful  for  checking  for  the  existance  of  a
+record,   without   performing  the  memory  allocation  done  by
+[1mgdbm_fetch[22m.
+
+
+To remove some data from the database:
+
+  ret = gdbm_delete ( dbf, key )
+
+[4mDbf[24m is the pointer returned by [1mgdbm_open[22m.  [4mKey[24m is the key data.
+
+The return value is -1 if the item is  not  present  or  the  re-
+quester  is  a reader.  The return value is 0 if there was a suc-
+cessful delete.
+
+
+The next two routines  allow  for  accessing  all  items  in  the
+database.   This  access is not key sequential, but it is guaran-
+teed to visit every key in the database once.  (The order has  to
+do with the hash values.)
+
+  key = gdbm_firstkey ( dbf )
+
+  nextkey = gdbm_nextkey ( dbf, key )
+
+[4mDbf[24m is the pointer returned by [1mgdbm_open[22m. [4mKey[24m is the key data.
+
+The return values are both of type [1mdatum[22m.  If the [4mdptr[24m element of
+the return value is NULL, there is no  first  key  or  next  key.
+Again notice that [4mdptr[24m points to data allocated by [1mmalloc(3C) [22mand
+[1mgdbm [22mwill not free it for you.
+
+These functions were intended to visit the database in  read-only
+algorithms, for instance, to validate the database or similar op-
+erations.
+
+File ‘visiting’ is based on a ‘hash table’.   [4mgdbm_delete[24m  re-ar-
+ranges the hash table to make sure that any collisions in the ta-
+ble do not leave some item ‘un-findable’.  The original key order
+is  NOT  guaranteed  to remain unchanged in ALL instances.  It is
+possible that some key will not be visited if  a  loop  like  the
+following is executed:
+
+   key = gdbm_firstkey ( dbf );
+   while ( key.dptr ) {
+      nextkey = gdbm_nextkey ( dbf, key );
+      if ( some condition ) {
+         gdbm_delete ( dbf, key );
+         free ( key.dptr );
+      }
+      key = nextkey;
+   }
+
+
+The following routine should be used very infrequently.
+
+  ret = gdbm_reorganize ( dbf )
+
+If  you  have had a lot of deletions and would like to shrink the
+space used by the [1mgdbm [22mfile, this  routine  will  reorganize  the
+database.  [1mGdbm [22mwill not shorten the length of a [1mgdbm [22mfile except
+by using  this  reorganization.   (Deleted  file  space  will  be
+reused.)
+
+
+Unless  your  database  was  opened with the GDBM_SYNC flag, gdbm
+does not wait for writes to be flushed to the disk before contin-
+uing.   The  following  routine can be used to guarantee that the
+database is physically written to the disk file.
+
+  gdbm_sync ( dbf )
+
+It will not return until the disk file state is syncronized  with
+the in-memory state of the database.
+
+
+To convert a [1mgdbm [22merror code into English text, use this routine:
+
+  ret = gdbm_strerror ( errno )
+
+Where [4merrno[24m is of type [4mgdbm_error[24m, usually  the  global  variable
+[4mgdbm_errno[24m.  The appropiate phrase is returned.
+
+
+[1mGdbm  [22mnow  supports  the ability to set certain options on an al-
+ready open database.
+
+  ret = gdbm_setopt ( dbf, option, value, size )
+
+Where [4mdbf[24m is the return value from a previous call to  [1mgdbm_open[22m,
+and  [4moption[24m specifies which option to set.  The valid options are
+currently:
+
+  [1mGDBM_CACHESIZE [22m- Set the size of the internal bucket
+  cache. This option may only be set once on each [4mGDBM_FILE[0m
+  descriptor, and is set automatically to 100 upon the first
+  access to the database.
+
+  [1mGDBM_FASTMODE [22m- Set [1mfast mode [22mto either on or off.  This
+  allows [1mfast mode [22mto be toggled on an already open and
+  active database. [4mvalue[24m (see below) should be set to either
+  TRUE or FALSE.  [4mThis[24m [4moption[24m [4mis[24m [4mnow[24m [4mobsolete.[0m
+
+  [1mGDBM_SYNCMODE [22m- Turn on or off file system synchronization  op-
+erations.
+  This  setting  defaults to off; [4mvalue[24m (see below) should be set
+to either
+  TRUE or FALSE.
+
+  [1mGDBM_CENTFREE [22m- Set [1mcentral free block pool  [22mto  either  on  or
+off.
+  The default is off, which is how previous versions of [1mGdbm[0m
+  handled  free blocks. If set, this option causes all subsequent
+free
+  blocks to be placed in the [1mglobal [22mpool, allowing (in thoery)
+  more file space to be reused more quickly.  [4mvalue[24m  (see  below)
+should
+  be set to either TRUE or FALSE.
+  [4mNOTICE:[24m [4mThis[24m [4mfeature[24m [4mis[24m [4mstill[24m [4munder[24m [4mstudy.[0m
+
+  [1mGDBM_COALESCEBLKS [22m- Set [1mfree block merging [22mto either on or off.
+  The default is off, which is how previous versions of [1mGdbm[0m
+  handled free blocks. If set, this option causes  adjacent  free
+blocks
+  to  be  merged.  This  can  become a CPU expensive process with
+time, though,
+  especially if used in conjunction with [1mGDBM_CENTFREE[22m. [4mvalue[0m
+  (see below) should be set to either TRUE or FALSE.
+  [4mNOTICE:[24m [4mThis[24m [4mfeature[24m [4mis[24m [4mstill[24m [4munder[24m [4mstudy.[0m
+
+[4mvalue[24m is the value to set [4moption[24m  to,  specified  as  an  integer
+pointer.   [4msize[24m is the size of the data pointed to by [4mvalue[24m.  The
+return value will be -1 upon failure, or  0  upon  success.   The
+global variable [4mgdbm_errno[24m will be set upon failure.
+
+For instance, to set a database to use a cache of 10, after open-
+ing it with [1mgdbm_open[22m, but prior to accessing it in any way,  the
+following code could be used:
+
+  int value = 10;
+
+  ret = gdbm_setopt( dbf, GDBM_CACHESIZE, &value, sizeof(int));
+
+
+If  the  database  was opened with the [1mGDBM_NOLOCK [22mflag, the user
+may wish to perform their own file locking on the  database  file
+in  order  to prevent multiple writers operating on the same file
+simultaneously.
+
+In order to support this, the [4mgdbm_fdesc[24m routine is provided.
+
+  ret = gdbm_fdesc ( dbf )
+
+Where [4mdbf[24m is the return value from a previous call to  [1mgdbm_open[22m.
+The return value will be the file descriptor of the database.
+
+The following two external variables may be useful:
+
+[4mgdbm_errno[24m  is  the variable that contains more information about
+gdbm errors.  (gdbm.h has the definitions of the error values and
+defines gdbm_errno as an external variable.)
+[4mgdbm_version[24m is the string containing the version information.
+
+
+There  are  a few more things of interest.  First, [1mgdbm [22mfiles are
+not "sparse".  You can copy them with the UNIX [1mcp(1) [22mcommand  and
+they  will  not  expand in the copying process.  Also, there is a
+compatibility mode for use with programs that  already  use  UNIX
+[1mdbm[22m.   In  this  compatibility  mode, no gdbm file pointer is re-
+quired by the programmer, and only one file may be  opened  at  a
+time.  All users in compatibility mode are assumed to be writers.
+If the [1mgdbm [22mfile is a read only, it will fail as  a  writer,  but
+will  also  try to open it as a reader.  All returned pointers in
+datum structures point to data that [1mgdbm [22mWILL free.  They  should
+be treated as static pointers (as standard UNIX [1mdbm [22mdoes).
+
+
+This library is accessed by specifying [4m-lgdbm[24m as the last parame-
+ter to the compile line, e.g.:
+
+        gcc -o prog prog.c -lgdbm
+
+If you wish to use the [1mdbm [22mor [1mndbm  [22mcompatibility  routines,  you
+must link in the [4mgdbm_compat[24m library as well.  For example:
+
+        gcc -o prog proc.c -lgdbm -lgdbm_compat
+
+
+dbm, ndbm
+
+by  Philip  A. Nelson and Jason Downs.  Copyright (C) 1990 - 1999
+Free Software Foundation, Inc.
+
+GDBM is free software; you can redistribute it and/or  modify  it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 1, or (at  your  op-
+tion) any later version.
+
+GDBM is distributed in the hope that it will be useful, but WITH-
+OUT ANY WARRANTY; without  even  the  implied  warranty  of  MER-
+CHANTABILITY  or  FITNESS  FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GDBM; see the file COPYING.  If not, write to the Free
+Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+
+You may contact the original author by:
+   e-mail:  phil@cs.wwu.edu
+  us-mail:  Philip A. Nelson
+Computer Science Department
+Western Washington University
+Bellingham, WA 98226
+
+You may contact the current maintainer by:
+   e-mail:  downsj@downsj.com
+
+
+
+
+
+
+
+

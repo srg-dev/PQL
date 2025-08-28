@@ -1,0 +1,265 @@
+This is TeX, Version 3.141592 (Web2C 7.5.4) (format=tex 2006.2.2)  19 SEP 2006 12:01
+**.ds ve 1.8.3
+(./gdbmerrno.h
+! You can't use `macro parameter character #' in horizontal mode.
+l.31 #
+      define	GDBM_NO_ERROR		0
+? In all of the following calls, the parameter \fIdbf\fR refers to the pointer
+! Undefined control sequence.
+<insert>  ...following calls, the parameter \fIdbf
+                                                  \fR refers to the pointer
+l.31 #
+      define	GDBM_NO_ERROR		0
+? returned from \fBgdbm_open\fR.
+OK, entering \nonstopmode...
+! Undefined control sequence.
+<insert>  ...lowing calls, the parameter \fIdbf\fR
+                                                   refers to the pointer
+l.31 #
+      define	GDBM_NO_ERROR		0
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   _
+l.31 #define	GDBM_
+                  NO_ERROR		0
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! You can't use `macro parameter character #' in math mode.
+l.32 #
+      define	GDBM_MALLOC_ERROR	1
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.33 #
+      define	GDBM_BLOCK_SIZE_ERROR	2
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.34 #
+      define	GDBM_FILE_OPEN_ERROR	3
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.35 #
+      define	GDBM_FILE_WRITE_ERROR	4
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.36 #
+      define	GDBM_FILE_SEEK_ERROR	5
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.37 #
+      define	GDBM_FILE_READ_ERROR	6
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.38 #
+      define	GDBM_BAD_MAGIC_NUMBER	7
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.39 #
+      define	GDBM_EMPTY_DATABASE	8
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.40 #
+      define	GDBM_CANT_BE_READER	9
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.41 #
+      define	GDBM_CANT_BE_WRITER	10
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.42 #
+      define	GDBM_READER_CANT_DELETE	11
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.43 #
+      define	GDBM_READER_CANT_STORE	12
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.44 #
+      define	GDBM_READER_CANT_REORGANIZE	13
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.45 #
+      define	GDBM_UNKNOWN_UPDATE	14
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.46 #
+      define	GDBM_ITEM_NOT_FOUND	15
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.47 #
+      define	GDBM_REORGANIZE_FAILED	16
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.48 #
+      define	GDBM_CANNOT_REPLACE	17
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.49 #
+      define	GDBM_ILLEGAL_DATA	18
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.50 #
+      define	GDBM_OPT_ALREADY_SET	19
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.51 #
+      define	GDBM_OPT_ILLEGAL	20
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   \par 
+l.52 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (3072.94109pt too wide) in paragraph at lines 30--52
+\tenrm de-fine GDBM$[]\teni O[]RROR\tenrm 0\teni defineGDBM[]ALLOC[]RROR\tenrm 
+1\teni defineGDBM[]LOCK[]IZE[]RROR\tenrm 2\teni defineGDBM[]ILE[]PEN[]RROR\tenr
+m 3\teni defineGDBM[]ILE[]RITE[]RROR\tenrm 4\teni defineGDBM[]ILE[]EEK[]RROR\te
+nrm 5\teni defineGDBM[]ILE[]EAD[]RROR\tenrm 6\teni defineGDBM[]AD[]AGIC[]UMBER\
+tenrm 7\teni defineGDBM[]MPTY[]ATABASE\tenrm 8\teni defineGDBM[]ANT[]E[]EADER\t
+enrm 9\teni defineGDBM[]ANT[]E[]RITER\tenrm 10\teni defineGDBM[]EADER[]ANT[]ELE
+TE\tenrm 11\teni defineGDBM[]EADER[]ANT[]TORE\tenrm 12\teni defineGDBM[]EADER[]
+ANT[]EORGANIZE\tenrm 13\teni defineGDBM[]NKNOWN[]PDATE\tenrm 14\teni defineGDBM
+[]TEM[]OT[]OUND\tenrm 15\teni defineGDBM[]EORGANIZE[]AILED\tenrm 16\teni define
+GDBM[]ANNOT[]EPLACE\tenrm 17\teni defineGDBM[]LLEGAL[]ATA\tenrm 18\teni defineG
+DBM[]PT[]LREADY[]ET\tenrm 19\teni defineGDBM[]PT[]LLEGAL\tenrm 20$ |
+
+\hbox(6.94444+1.94444)x469.75499, glue set - 1.0
+.\tenrm d
+.\tenrm e
+.\discretionary
+..\tenrm -
+.\tenrm ^^L (ligature fi)
+.\tenrm n
+.etc.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   _
+l.53 typedef int gdbm_
+                      error;		/* For compatibilities sake. */
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   \par 
+l.54 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   _
+l.55 extern gdbm_
+                 error gdbm_errno;
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+)
+! Emergency stop.
+<*> .ds ve 1.8.3
+                
+*** (job aborted, no legal \end found)
+
+No pages of output.

@@ -1,0 +1,102 @@
+#ifndef __PQLX_XML_INPUT_H
+#define __PQLX_XML_INPUT_H
+
+// Imported EVENT Information
+// sample XML input file at $PQLXPROD/dbExample.eventInfo.xml
+#define EVENT_INFO_FILE	"eventInfo.xml"
+#define	eventXMLTag		"EVENT"
+
+enum {	// XML File input fields
+	XMLEVENTID,
+	XMLEVENTDESCR,
+	XMLEVENTORIGIN,
+	XMLEVENTORIGINID,
+	XMLEVENTCAT,
+	XMLEVENTLOC,
+	XMLEVENTTIME,
+	XMLEVENTLAT,
+	XMLEVENTLON,
+	XMLEVENTDEPTH,
+	XMLEVENTMAG,
+	TTLXMLEVENT
+};
+
+enum {	// DB Table input fields
+	DBSEISEVENTID,
+	DBSEISORIGINID,
+	DBSEISDESCR,
+	DBSEISCAT,
+	DBSEISTIME,
+	DBSEISMSEC,
+	DBSEISLAT,
+	DBSEISLON,
+	DBSEISDEPTH,
+	TTLDBSEIS
+};
+
+enum {
+	DBMAGMAG,
+	DBMAGTYPE,
+	TTLDBMAG
+};
+
+typedef struct _MAGINFO
+{	// structure used to pass data to DB
+	char	*values[TTLDBMAG];
+} MAGINFO;
+
+typedef struct _ORIGININFO
+{	// structure used to pass data to DB
+	char	*values[TTLDBSEIS];		// input data to SEISEVENT table
+	GSList	*mags;					// magnitudes - input data to SEISMAG table; data = MAGINFO
+} ORIGININFO;
+
+// Imported Channel META-Data Information
+// sample XML input file at $PQLXPROD/dbExample.chnMETA.xml
+#define CHNMETA_INFO_FILE	"chnMETA*.xml"
+#define	chnMETAXMLTag 		"CHANNEL"
+
+enum {	// XML File input fields
+	XMLCHNMETANTW,
+	XMLCHNMETASTN,
+	XMLCHNMETALOC,
+	XMLCHNMETACHN,
+	XMLCHNMETASTART,
+	XMLCHNMETAEND,
+	XMLCHNMETASITENAME,
+	XMLCHNMETALAT,
+	XMLCHNMETALON,
+	XMLCHNMETAELEV,
+	XMLCHNMETADEPTH,
+	XMLCHNMETASENSITIVITY,
+	XMLCHNMETAUNITS,
+	XMLCHNMETAINSTID,
+	XMLCHNMETAAZIMUTH,
+	XMLCHNMETADIP,
+	XMLCHNMETASRATE
+};
+
+enum {	// DB Table input fields
+	DBCHNMETACHNID,
+	DBCHNMETASTART,
+	DBCHNMETAEND,
+	DBCHNMETASITENAME,
+	DBCHNMETALAT,
+	DBCHNMETALON,
+	DBCHNMETAELEV,
+	DBCHNMETADEPTH,
+	DBCHNMETASENSITIVITY,
+	DBCHNMETAUNITS,
+	DBCHNMETAINSTID,
+	DBCHNMETAAZIMUTH,
+	DBCHNMETADIP,
+	DBCHNMETASAMPINT,
+	TTLDBCHNMETA
+};
+
+typedef struct _CHNMETAINFO
+{	// structure used to pass data to DB
+	char	*values[TTLDBCHNMETA];
+} CHNMETAINFO;
+
+#endif
