@@ -26,7 +26,7 @@
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `dbm' library (-ldbm). */
-#define HAVE_LIBDBM 1
+/* #undef HAVE_LIBDBM */
 
 /* Define to 1 if you have the `ndbm' library (-lndbm). */
 /* #undef HAVE_LIBNDBM */
